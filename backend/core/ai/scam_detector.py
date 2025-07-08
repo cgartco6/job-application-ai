@@ -1,31 +1,42 @@
 import re
-from nltk.corpus import stopwords
-from nltk.tokenize import word_tokenize
-import nltk
-nltk.download('punkt')
-nltk.download('stopwords')
+import spacy
+from urllib.parse import urlparse
 
-def detect_scam(description):
-    scam_keywords = [
-        'registration fee', 'admin fee', 'processing fee', 
-        'pay to apply', 'money transfer', 'western union', 
-        'moneygram', 'bitcoin', 'cryptocurrency', 'urgent hiring',
-        'work from home', 'no experience', 'earn big'
-    ]
+nlp = spacy.load("en_core_web_sm")
+
+SCAM_INDICATORS = [
+    r"registration fee",
+    r"pay.*upfront",
+    r"send.*money",
+    r"bank.*details",
+    r"urgent.*hiring",
+    r"work from home.*immediately",
+    r"no experience needed",
+    r"earn.*per day",
+    r"investment.*required",
+    r"personal information.*required"
+]
+
+def detect_scam(job_description):
+    """
+    Detect potential job scams using NLP and pattern matching
+    Returns: (is_scam, reason)
+    """
+    if not job_description:
+        return False, ""
     
-    # Check for common scam patterns
-    for keyword in scam_keywords:
-        if keyword in description.lower():
-            return True, f"Contains scam keyword: {keyword}"
+    # Check for scam indicators
+    description = job_description.lower()
+    for pattern in SCAM_INDICATORS:
+        if re.search(pattern, description):
+            return True, f"Matched scam pattern: {pattern}"
     
-    # Check for excessive urgency
-    words = word_tokenize(description.lower())
-    stop_words = set(stopwords.words('english'))
-    filtered_words = [word for word in words if word not in stop_words]
+    # Check for suspicious domains
+    doc = nlp(description)
+    for ent in doc.ents:
+        if ent.label_ == "URL":
+            domain = urlparse(ent.text).netloc
+            if domain.count('.') > 2 or "job" not in domain:
+                return True, f"Suspicious domain: {domain}"
     
-    urgent_words = ['urgent', 'immediate', 'asap', 'fast', 'quick']
-    urgent_count = sum(1 for word in filtered_words if word in urgent_words)
-    if urgent_count > 3:
-        return True, "Excessive urgency indicators"
-    
-    return False, None
+    return False, ""
