@@ -1,109 +1,86 @@
-import React, { useState, useEffect } from 'react';
-import CVUpload from './CVUpload';
-import JobList from './JobList';
-import { getJobs } from '../services/api';
-import { checkAuth } from '../services/auth';
-import { useNavigate } from 'react-router-dom';
-import { formatDate } from '../utils';
-import './styles/Dashboard.css';
+import React, { useState } from 'react';
+import { uploadCV } from '../services/api';
 
-const Dashboard = () => {
-  const [user, setUser] = useState(null);
-  const [jobs, setJobs] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [cvUploaded, setCvUploaded] = useState(false);
-  const navigate = useNavigate();
+const CVUpload = ({ onUpload }) => {
+  const [file, setFile] = useState(null);
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [error, setError] = useState('');
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const isAuthenticated = await checkAuth();
-        if (!isAuthenticated) {
-          navigate('/login');
-          return;
-        }
-        
-        // In a real app, you'd fetch user data from API
-        const mockUser = {
-          name: 'John Doe',
-          email: 'john@example.com',
-          cvUploaded: false,
-          jobSearchActive: true,
-          lastUpdated: new Date().toISOString()
-        };
-        
-        setUser(mockUser);
-        setCvUploaded(mockUser.cvUploaded);
-        
-        const jobsData = await getJobs();
-        setJobs(jobsData);
-      } catch (error) {
-        console.error('Dashboard data fetch failed:', error);
-      } finally {
-        setLoading(false);
+  const handleFileChange = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      const selectedFile = e.target.files[0];
+      
+      // Check file type and size
+      const validTypes = ['application/pdf', 'image/jpeg', 'image/png', 
+                         'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+      
+      if (!validTypes.includes(selectedFile.type)) {
+        setError('Invalid file type. Please upload PDF, DOCX, JPG, or PNG.');
+        return;
       }
-    };
-    
-    fetchData();
-  }, [navigate]);
-
-  const handleCVUpload = (result) => {
-    console.log('CV processed:', result);
-    setCvUploaded(true);
-    // Update user state with CV data
-    setUser(prev => ({
-      ...prev,
-      cvUploaded: true,
-      skills: result.skills
-    }));
+      
+      if (selectedFile.size > 5 * 1024 * 1024) { // 5MB
+        setError('File size too large. Maximum size is 5MB.');
+        return;
+      }
+      
+      setFile(selectedFile);
+      setError('');
+    }
   };
 
-  if (loading) {
-    return <div className="loading">Loading dashboard...</div>;
-  }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!file) {
+      setError('Please select a file');
+      return;
+    }
+    
+    setIsProcessing(true);
+    setError('');
+    
+    try {
+      const result = await uploadCV(file);
+      onUpload(result);
+    } catch (err) {
+      setError('Upload failed. Please try again.');
+      console.error('CV upload error:', err);
+    } finally {
+      setIsProcessing(false);
+    }
+  };
 
   return (
-    <div className="dashboard">
-      <header className="dashboard-header">
-        <h1>Welcome, {user?.name}</h1>
-        <p>Your job search is currently <strong>{user?.jobSearchActive ? 'ACTIVE' : 'PAUSED'}</strong></p>
-        <p>Last updated: {user?.lastUpdated ? formatDate(user.lastUpdated) : 'N/A'}</p>
-      </header>
+    <div className="cv-upload">
+      <h2>Upload Your CV</h2>
+      <p>Supported formats: PDF, DOCX, JPG, PNG (max 5MB)</p>
       
-      <div className="dashboard-content">
-        {!cvUploaded ? (
-          <div className="cv-section">
-            <h2>Get Started</h2>
-            <p>Upload your CV to begin your job search</p>
-            <CVUpload onUpload={handleCVUpload} />
-          </div>
-        ) : (
-          <div className="job-section">
-            <div className="stats-overview">
-              <div className="stat-card">
-                <h3>Total Jobs Found</h3>
-                <p className="stat-value">{jobs.length}</p>
-              </div>
-              <div className="stat-card">
-                <h3>Applications Sent</h3>
-                <p className="stat-value">42</p>
-              </div>
-              <div className="stat-card">
-                <h3>Interviews</h3>
-                <p className="stat-value">5</p>
-              </div>
-              <div className="stat-card">
-                <h3>Offers</h3>
-                <p className="stat-value">1</p>
-              </div>
-            </div>
-            
-            <JobList jobs={jobs} />
-          </div>
-        )}
-      </div>
+      <form onSubmit={handleSubmit}>
+        <div className="file-input-container">
+          <label className="file-input-label">
+            Choose File
+            <input 
+              type="file" 
+              accept=".pdf,.docx,.jpg,.jpeg,.png" 
+              onChange={handleFileChange} 
+              className="file-input" 
+            />
+          </label>
+          {file && <span className="file-name">{file.name}</span>}
+        </div>
+        
+        {error && <div className="error-message">{error}</div>}
+        
+        <button 
+          type="submit" 
+          disabled={!file || isProcessing}
+          className="submit-button"
+        >
+          {isProcessing ? 'Processing...' : 'Upload & Process'}
+        </button>
+      </form>
     </div>
   );
 };
 
-export default Dashboard;
+export default CVUpload;
