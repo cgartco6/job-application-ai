@@ -1,0 +1,75 @@
+:root {
+  --primary-color: #2563eb;
+  --secondary-color: #3b82f6;
+  --success-color: #10b981;
+  --warning-color: #f59e0b;
+  --danger-color: #ef4444;
+  --text-color: #1f2937;
+  --light-gray: #f3f4f6;
+  --medium-gray: #e5e7eb;
+  --dark-gray: #6b7280;
+  --white: #ffffff;
+  --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: var(--text-color);
+  line-height: 1.6;
+  background-color: var(--light-gray);
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-size: 1.5rem;
+  color: var(--dark-gray);
+}
+
+.app-footer {
+  text-align: center;
+  padding: 1rem;
+  background-color: var(--medium-gray);
+  color: var(--dark-gray);
+  font-size: 0.9rem;
+}
+
+.error-message {
+  color: var(--danger-color);
+  background-color: #fee2e2;
+  padding: 0.75rem;
+  border-radius: 4px;
+  margin: 1rem 0;
+  border-left: 4px solid var(--danger-color);
+}
+
+.success-message {
+  color: var(--success-color);
+  background-color: #d1fae5;
+  padding: 0.75rem;
+  border-radius: 4px;
+  margin: 1rem 0;
+  border-left: 4px solid var(--success-color);
+}
