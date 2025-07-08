@@ -5,12 +5,13 @@ from .models import JobApplication
 @receiver(post_save, sender=JobApplication)
 def check_job_offer(sender, instance, **kwargs):
     if instance.status == "OFFER_RECEIVED":
-        user_profile = instance.user
-        user_profile.job_search_active = False
-        user_profile.save()
+        # Deactivate user's job search
+        user = instance.user
+        user.job_search_active = False
+        user.save()
         
         # Cancel pending applications
         JobApplication.objects.filter(
-            user=user_profile, 
-            status="PENDING"
+            user=user, 
+            status__in=["PENDING", "SUBMITTED"]
         ).update(status="CANCELLED")
