@@ -1,0 +1,432 @@
+/* CV Upload Styles */
+.cv-upload {
+  padding: 1.5rem;
+  background-color: var(--white);
+  border-radius: 8px;
+  box-shadow: var(--box-shadow);
+}
+
+.cv-upload h2 {
+  margin-bottom: 1rem;
+}
+
+.file-input-container {
+  margin-bottom: 1rem;
+}
+
+.file-input-label {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  background-color: var(--primary-color);
+  color: var(--white);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.file-input-label:hover {
+  background-color: var(--secondary-color);
+}
+
+.file-input {
+  display: none;
+}
+
+.file-name {
+  margin-left: 1rem;
+  color: var(--dark-gray);
+}
+
+.submit-button {
+  padding: 0.75rem 1.5rem;
+  background-color: var(--success-color);
+  color: var(--white);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s;
+}
+
+.submit-button:disabled {
+  background-color: var(--dark-gray);
+  cursor: not-allowed;
+}
+
+.submit-button:not(:disabled):hover {
+  background-color: #059669;
+}
+
+/* Job List Styles */
+.job-list {
+  background-color: var(--white);
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: var(--box-shadow);
+}
+
+.job-controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  gap: 1rem;
+}
+
+.filters {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.filters button {
+  padding: 0.5rem 1rem;
+  background-color: var(--light-gray);
+  border: 1px solid var(--medium-gray);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.filters button.active {
+  background-color: var(--primary-color);
+  color: var(--white);
+  border-color: var(--primary-color);
+}
+
+.search-sort {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.search-input {
+  padding: 0.5rem;
+  border: 1px solid var(--medium-gray);
+  border-radius: 4px;
+  width: 200px;
+}
+
+.sort-select {
+  padding: 0.5rem;
+  border: 1px solid var(--medium-gray);
+  border-radius: 4px;
+  background-color: var(--white);
+}
+
+.jobs-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 1.5rem;
+}
+
+.job-card {
+  border: 1px solid var(--medium-gray);
+  border-radius: 8px;
+  padding: 1.5rem;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.job-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--box-shadow);
+}
+
+.job-card.scam {
+  border-left: 4px solid var(--danger-color);
+}
+
+.job-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.job-header h3 {
+  font-size: 1.25rem;
+}
+
+.scam-tag, .applied-tag {
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: bold;
+}
+
+.scam-tag {
+  background-color: #fee2e2;
+  color: var(--danger-color);
+}
+
+.applied-tag {
+  background-color: #dbeafe;
+  color: var(--primary-color);
+}
+
+.job-details p {
+  margin-bottom: 0.25rem;
+  font-size: 0.9rem;
+  color: var(--dark-gray);
+}
+
+.job-description {
+  margin: 1rem 0;
+  padding: 1rem;
+  background-color: var(--light-gray);
+  border-radius: 4px;
+  font-size: 0.95rem;
+}
+
+.scam-reason {
+  padding: 0.75rem;
+  background-color: #fee2e2;
+  border-radius: 4px;
+  margin: 1rem 0;
+  border-left: 3px solid var(--danger-color);
+}
+
+.job-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.apply-btn, .view-btn {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.3s;
+}
+
+.apply-btn {
+  background-color: var(--primary-color);
+  color: var(--white);
+}
+
+.apply-btn:hover {
+  background-color: var(--secondary-color);
+}
+
+.view-btn {
+  background-color: transparent;
+  border: 1px solid var(--primary-color);
+  color: var(--primary-color);
+}
+
+.view-btn:hover {
+  background-color: var(--light-gray);
+}
+
+/* Settings Styles */
+.settings {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.settings-form {
+  background-color: var(--white);
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: var(--box-shadow);
+}
+
+.form-section {
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--medium-gray);
+}
+
+.form-section:last-child {
+  border-bottom: none;
+}
+
+.form-section h2 {
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--primary-color);
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="tel"],
+.form-group input[type="number"],
+.form-group select {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--medium-gray);
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.checkbox-group {
+  margin-bottom: 1rem;
+}
+
+.checkbox-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 0.75rem;
+}
+
+.checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.hint {
+  font-size: 0.85rem;
+  color: var(--dark-gray);
+  margin-top: 0.25rem;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.save-btn, .logout-btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s;
+}
+
+.save-btn {
+  background-color: var(--primary-color);
+  color: var(--white);
+}
+
+.save-btn:hover {
+  background-color: var(--secondary-color);
+}
+
+.logout-btn {
+  background-color: var(--danger-color);
+  color: var(--white);
+}
+
+.logout-btn:hover {
+  background-color: #dc2626;
+}
+
+/* Application List Styles */
+.application-list {
+  padding: 1rem;
+}
+
+.application-card {
+  background-color: var(--white);
+  border-radius: 8px;
+  box-shadow: var(--box-shadow);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.application-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.status-tag {
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: bold;
+}
+
+.status-tag.submitted {
+  background-color: #dbeafe;
+  color: var(--primary-color);
+}
+
+.status-tag.interview {
+  background-color: #fef3c7;
+  color: var(--warning-color);
+}
+
+.status-tag.offer {
+  background-color: #d1fae5;
+  color: var(--success-color);
+}
+
+.status-tag.rejected {
+  background-color: #fee2e2;
+  color: var(--danger-color);
+}
+
+.status-tag.failed {
+  background-color: #e5e7eb;
+  color: var(--dark-gray);
+}
+
+.application-details p {
+  margin-bottom: 0.5rem;
+}
+
+.application-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.view-btn, .withdraw-btn {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.3s;
+}
+
+.view-btn {
+  background-color: var(--primary-color);
+  color: var(--white);
+}
+
+.view-btn:hover {
+  background-color: var(--secondary-color);
+}
+
+.withdraw-btn {
+  background-color: var(--light-gray);
+  color: var(--dark-gray);
+  border: 1px solid var(--medium-gray);
+}
+
+.withdraw-btn:hover {
+  background-color: var(--medium-gray);
+}
+
+/* Ad Banner Styles */
+.ad-banner {
+  background-color: #f0f0f0;
+  padding: 10px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+}
+
+.ad-banner ins {
+  display: inline-block;
+  width: 100%;
+  max-width: 728px;
+  height: 90px;
+}
